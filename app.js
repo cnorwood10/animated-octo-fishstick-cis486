@@ -91,6 +91,13 @@ app.get('/login', async (req, res) => {
     })
 });
 
+app.get('/signup', async (req, res) => {
+    res.render('signup', {
+        pageTitle: "Sign Up",
+        title: "Sign Up for a Membership",
+    })
+});
+
 app.get('/reviews', async (req, res) => {
     res.render('reviews', {
         pageTitle: "Reviews",
@@ -104,6 +111,8 @@ app.get('/schedule', async (req, res) => {
         title: "View the Schedule",
     })
 });
+
+
 
 // app.get('/members', async (req, res) => {
     
