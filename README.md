@@ -1,3 +1,4 @@
+
 # animated-octo-fishstick-cis486
 <h1>We are Team Clark</h1>
 
@@ -10,3 +11,5 @@ Read more about our team in wiki 📖 : https://github.com/cnorwood10/animated-o
 **I want** a functioning interface, including an add member form
 
 **So that** customers can view the schedule, update account, and sign up for memberships.
+
+
