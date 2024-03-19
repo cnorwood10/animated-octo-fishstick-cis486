@@ -1,0 +1,28 @@
+<%- include('partials/html-start.ejs') %>
+
+    <div class="card-container">
+        <div class="card">
+           <h6>John Doe</h6>
+           <p>The gym is always clean and everything is put away that is not in use.</p>
+           <p>I would recommend this gym to everyone</p>
+        </div>
+        <br>
+        <br>
+        <div class="card">
+           <h6>Jane Doe</h6>
+           <p>The gym is never too crowded so I can get my workout done quick</p>
+        </div>
+        <br>
+        <br>
+        <div class="card">
+           <h6>Customer</h6>
+           <p>The classes are easy to sign up for and are very fun to take.</p>
+        </div>
+       </div>
+       <br>
+       <br>
+    <div class="textarea">
+        <textarea id="text" name="text" rows="4" cols="50" placeholder="Leave us a review!"></textarea>
+      </div>
+      <button class="btn btn-outline-primary" value="Review" onclick="addReview()">Submit Review</button>
+      <%- include('partials/html-end.ejs') %>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <!-- NavBar -->
+    <nav class="navbar navbar-expand-sm bg-danger navbar-light justify-content-center fixed-top">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+     
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link text-white" target="_self" href="/" style="font-size: 20px;"><b>Clark's Gym</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" target="_self" href="/login" style="font-size: 20px;"><b>Login/Sign Up</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" target="_self" href="/schedule" style="font-size: 20px;"><b>Class Schedule</b></a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" target="_self" href="/reviews" style="font-size: 20px;"><b>User Reviews</b></a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" target="_self" href="/account" style="font-size: 20px;"><b>Account Management</b></a>
+          </li> 
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <h1 id="view" style="text-align: center;"><%= title %></h1>
+    <div style="text-align: center;">
+        <img src="/images/clark-logo.jpeg" atl="Clark's Gym Logo" width="200px">
+      </div>
