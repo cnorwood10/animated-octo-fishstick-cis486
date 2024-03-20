@@ -1,10 +1,9 @@
 <%- include('partials/html-start.ejs') %>
-
-    <div class="card-deck">
-      <div class="card">
-         <div class="card-body">
-           <h5 class="card-title" style="text-align: center;">About Clark's</h5>
-           <p class="card-text">Clark's Gym is a fitness center located in Pulaski, TN and Lawrenceburg, TN. 
+    <div class="row">
+      <div class="card col-sm-5">
+         <div class="container-fluid" id="index">
+           <h5 class="index">About Clark's</h5>
+           <p>Clark's Gym is a fitness center located in Pulaski, TN and Lawrenceburg, TN. 
             We are open 24 hours a day, 7 days a week to meet all of your fitness needs.
             Clark's Gym offers multiple fitness classes hosted by the best instructors.
             We also have personal trainers on-site that will help you grow stronger and get fit!
@@ -13,9 +12,9 @@
             <p>Give us a call at (555) 555-5555 during normal business hours to answer any questions or gather more information.</p>
          </div>
       </div>
-      <div class="card">
-         <div class="card-body">
-           <h5 class="card-title" style="text-align: center;">Reviews</h5>
+      <div class="card col-sm-5">
+         <div class="container-fluid" id="index">
+           <h5 class="index">Reviews</h5>
            <h8>John Doe</h8>
            <p>The gym is always clean and everything is put away that is not in use.</p>
            <p>I would recommend this gym to everyone</p><br>
@@ -25,10 +24,12 @@
            <p>The classes are easy to sign up for and are very fun to take.</p>
          </div>
       </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title" style="text-align: center;">Membership Pricing - Single</h5>
-          <table class="table">
+    </div>
+    <div class="row">
+      <div class="card col-sm-5">
+        <div class="container-fluid">
+          <h5 class="index">Membership Pricing - Single</h5>
+          <table class="styled-table">
             <tbody>
               <tr>
                 <th>Duration</th>
@@ -55,10 +56,10 @@
           <a href="/signup"><button type="submit" class="btn btn-outline-primary">Sign Up Now!</button></a>
         </div>
       </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title" style="text-align: center;">Membership Pricing - Family</h5>
-          <table class="table">
+      <div class="card col-sm-5">
+        <div class="container-fluid">
+          <h5 class="index">Membership Pricing - Family</h5>
+          <table class="styled-table">
             <tbody>
               <th>Duration</th>
                 <th>Price</th>
@@ -87,4 +88,5 @@
         </div>        
       </div>
      </div>
+
      <%- include('partials/html-end.ejs') %>
