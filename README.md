@@ -6,10 +6,10 @@ Read more about our team in wiki 📖 : https://github.com/cnorwood10/animated-o
 
 <h3>⭐ Here is our user story:  </h3>
 
-**As A** small fitness center owner
+**As A** customer wanting to get fit
 
 **I want** a functioning interface, including an add member form
 
-**So that** customers can view the schedule, update account, and sign up for memberships.
+**So that** I can sign up for a membership and classes.
 
 
