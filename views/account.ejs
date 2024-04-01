@@ -5,12 +5,12 @@
         <div class="card bg-dark m-3" style="color:white;">
           <h4 class="card-title" style="text-align: center;">Name and Password</h4>
             <div class="card-body">
-              <label for="fname">Name: </label>
-              <input type="text" id="fname" name="name" placeholder="<%= members[1].name %>"><br><br>
-              <label for="uname">Username: </label>
-              <input type="text" id="uname" name="userName" placeholder="<%= members[1].userName %>"><br><br>
+              <label for="name">Name: </label>
+              <input type="text" id="name" name="name" placeholder="<%= members[1].name %>"><br><br>
+              <label for="userName">Username: </label>
+              <input type="text" id="userName" name="userName" placeholder="<%= members[1].userName %>"><br><br>
               <label type="password">Password: </label>
-              <input type="password" id="pword" name="password" placeholder="<%= members[1].password %>"><br><br>
+              <input type="password" id="password" name="password" placeholder="<%= members[1].password %>"><br><br>
             </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
               <label for="email">Email: </label>
               <input type="email" id="email" name="email" placeholder="<%= members[1].email %>"><br><br>
               <label for="address">Address:</label>
-              <input type="address" id="add" name="address" placeholder="<%= members[1].address %>"><br><br>
+              <input type="address" id="address" name="address" placeholder="<%= members[1].address %>"><br><br>
             </div>
         </div>
       </div>
@@ -49,6 +49,9 @@
       </div>
     </div>
   <button type="submit" class="btn btn-outline-primary" formaction="/updateMember">Save Account</button>
-  <button type="submit" class="btn btn-outline-danger" formaction="/deleteMember">Delete Account</button>
+  <!-- <button type="submit" class="btn btn-outline-danger" formaction="/deleteMember">Delete Account</button> -->
 </form>
+
+
+<h1><%= name %>'s Payment History</h1>
     <%- include('partials/html-end.ejs') %>

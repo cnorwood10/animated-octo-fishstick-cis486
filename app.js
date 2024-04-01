@@ -16,17 +16,14 @@ let path = require('path');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: 'secret',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {secure: true}
-}))
+    saveUninitialized: false,
+    cookie: {maxAge: 60000} // expires after 1 minute
+}));
 
-// use res.render to load up an ejs view file
-
-
+// use res.render to load
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.URI, {
     serverApi: {
@@ -95,6 +92,9 @@ app.get('/login', function (req, res) {
         title: "Login to your account"
     })
 });
+
+
+
 app.post('/loginCheck', async (req, res) => {
     try {
         // check if the user exists
@@ -107,6 +107,8 @@ app.post('/loginCheck', async (req, res) => {
                 // store the user in the session
                 req.session.user = user;
                 res.redirect('/account');
+                console.log('Allowed');
+                console.log(user);
             } else {
                 res.send('Not Allowed');
                 console.log('Not Allowed');
@@ -190,12 +192,14 @@ app.get('/schedule', async (req, res) => {
 app.get('/account', async (req, res) => {
     let result = await connectMemberships();
 
-    console.log("result: ", result);
+    //console.log("result: ", result);
+    console.log("req.session.user: ", req.session.user);
 
     res.render('account', {
         pageTitle: "Account",
         title: "Your Account",
-        members: result
+        members: result,
+        name: req.session.user,
     })
 } );
 
