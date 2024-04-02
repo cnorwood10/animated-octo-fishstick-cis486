@@ -7,6 +7,8 @@ const port = (process.env.PORT || 5500)
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+var salt = bcrypt.genSaltSync(10);
+var hash = bcrypt.hashSync('bacon', 8);
 
 
 // set the view engine to ejs
@@ -23,7 +25,7 @@ app.use(session({
     cookie: {maxAge: 60000} // expires after 1 minute
 }));
 
-// use res.render to load
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.URI, {
     serverApi: {
@@ -45,8 +47,7 @@ async function connectMemberships() {
         console.log("getClarksGym() error: ", err);
     }
     finally {
-        // Ensures that the client will close when you finish/error
-        //await client.close();
+        
     }
 }
 
@@ -54,8 +55,6 @@ async function connectSchedule() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
-        // Send a ping to confirm a successful connection
-        // await client.db("admin").command({ ping: 1 });
         const result = await client.db("ClarksGym").collection("schedule").find().toArray();
         console.log("mongo call await inside f/n: ", result);
         return result;
@@ -100,22 +99,18 @@ app.get('/login', function (req, res) {
 
 app.post('/loginCheck', async (req, res) => {
     try {
+
         // check if the user exists
         client.connect;
         const collection = await client.db("ClarksGym").collection("memberships"); 
         let user = await collection.findOne({ userName: req.body.userName });
-        if (user) {
+
+        if (user || (await bcrypt.compare(req.body.password, user.password))) {
             // check if the password is correct
-            if (req.body.password === user.password) {
                 // store the user in the session
                 req.session.user = user;
                 res.redirect('/account');
                 console.log('Allowed');
-                console.log(user);
-            } else {
-                res.send('Not Allowed');
-                console.log('Not Allowed');
-            }
         } else {
             res.send('Not Allowed');
             console.log('Not Allowed');
@@ -146,15 +141,19 @@ app.get('/signup', async (req, res) => {
 });
 
 app.post('/signupNew', async (req, res) => {
-
+        
     try {
-                // console.log("req.body: ", req.body) 
                 client.connect;
                 const collection = client.db("ClarksGym").collection("memberships");
         
                 //draws from body parser 
                 console.log(req.body);
-        
+
+                //hash the password before adding to database
+                const salt = await bcrypt.genSalt();
+                const hashed_password = await bcrypt.hash(req.body.password,salt);
+                req.body.password = hashed_password;
+
                 let user = await collection.insertOne(req.body);
                 req.session.user = user;
                 console.log("user: ", user);
