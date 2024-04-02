@@ -143,6 +143,12 @@ app.get('/signup', async (req, res) => {
 app.post('/signupNew', async (req, res) => {
         
     try {
+            if(req.body.password != req.body.password2){ 
+                throw new Error("Passwords do not match");
+            }
+                //Remove password2 from the request body to prevent it from being added to the database
+                delete req.body.password2; 
+
                 client.connect;
                 const collection = client.db("ClarksGym").collection("memberships");
         
@@ -208,6 +214,13 @@ app.get('/account', async (req, res) => {
 
 app.post('/updateMember', async (req, res) => {
     try{
+        if(req.body.password != req.body.password2){ 
+            throw new Error("Passwords do not match");
+        }
+
+            //Remove password2 from the request body to prevent it from being added to the database
+            delete req.body.password2;
+            
         console.log("body: ", req.body);
         client.connect;
         const collection = client.db("ClarksGym").collection("memberships");
