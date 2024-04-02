@@ -220,7 +220,7 @@ app.post('/updateMember', async (req, res) => {
 
             //Remove password2 from the request body to prevent it from being added to the database
             delete req.body.password2;
-            
+
         console.log("body: ", req.body);
         client.connect;
         const collection = client.db("ClarksGym").collection("memberships");

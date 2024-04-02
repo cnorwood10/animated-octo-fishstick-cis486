@@ -1,5 +1,4 @@
 <%- include('partials/html-start.ejs') %>
-
     <div class="card-container">
         <div class="card">
            <h6>John Doe</h6>
@@ -21,8 +20,18 @@
        </div>
        <br>
        <br>
-    <div class="textarea">
-        <textarea id="text" name="text" rows="4" cols="50" placeholder="Leave us a review!"></textarea>
+
+      <div class="card" id="reviewForm">
+         <h5>Leave a Review</h5>
+      <form action="/addReview" method="post">
+      <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name"></input><br>
+      <label for="review">Review:</label><br>
+      <textarea id="text" name="review" rows="4" cols="50"></textarea>
+      <br>
+      <button class="btn btn-primary" value="submit">Submit Review</button>
+      </form>
       </div>
-      <button class="btn btn-outline-primary" value="Review" onclick="addReview()">Submit Review</button>
+      </div>
       <%- include('partials/html-end.ejs') %>
