@@ -195,7 +195,7 @@ app.get('/account', async (req, res) => {
     let result = await connectMemberships();
     if (!req.session.user) { 
         return res.redirect("/login"); 
-      };
+      }
     console.log("req.session.user: ", req.session.user);
 
     res.render('account', {
