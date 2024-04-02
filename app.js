@@ -110,12 +110,13 @@ app.post('/loginCheck', async (req, res) => {
                 console.log('Allowed');
                 console.log(user);
             } else {
-                res.send('Not Allowed');
-                console.log('Not Allowed');
+                res.send('Not Allowed. <a href="/login">Return to Login</a>');
+                console.log('Not A');
+                
             }
         } else {
-            res.send('Not Allowed');
-            console.log('Not Allowed');
+            res.send('Invalid username and/or password. <a href="/login">Return to Login</a>');
+            console.log('Not');
         }
     } catch (error) {
         console.log(error);
