@@ -43,3 +43,12 @@
 .styled-table tbody tr:last-of-type {
     border-bottom: 2px solid #da0303;
 }
+
+.account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    color: white;
+}
