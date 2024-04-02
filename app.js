@@ -209,9 +209,15 @@ app.post('/updateMember', async (req, res) => {
         client.connect;
         const collection = client.db("ClarksGym").collection("memberships");
         let result = await collection.findOneAndUpdate(
-            {"_id": new ObjectId(req.body.id)},
-            {$set: {name: req.body.name, userName: req.body.userName, 
-                password: req.body.password, email: req.body.email, address: req.body.address, membership: req.body.membership}}
+            {_id: new ObjectId(req.body.id)},
+            {$set: {name: req.body.name, 
+                    //userName: req.body.userName, 
+                    //password: req.body.password, 
+                    //email: req.body.email, 
+                    //address: req.body.address, 
+                    // membership: req.body.membership,
+                    // type: req.body.type,
+                }}
         )
         .then(result => {
             console.log(result);
@@ -260,12 +266,13 @@ app.post('/deleteMember', async (req, res) => {
         const collection = client.db("ClarksGym").collection("memberships");
         let result = await collection.findOneAndDelete(
             {
-                "_id": new ObjectId(req.body.id)
+                _id: new ObjectId(req.body.id)
             }
         )
             .then(result => {
                 console.log(result);
                 res.redirect('/account');
+                
             })
             .catch(error => console.error(error))
     }
