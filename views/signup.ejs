@@ -1,104 +1,74 @@
 <%- include('partials/html-start.ejs') %>
-<div class="card col-sm-4">
-    <div class="container">
-        <form>
+<div class="row">
+    <div class="card col-sm-5">
+        <div class="container">
             <h2>Sign Up</h2>
-            <div class="container">
-                <label for="fname"><h5>First Name</h5></label> <br>
-                <input type="text" placeholder="Enter First Name" name="fname" required>
+            <form action="/signupNew" method="POST">
+                <div class="container">
+                    <label for="name"><h5>Name</h5></label> <br>
+                    <input type="text" placeholder="Enter Full Name" name="name" required>
 
-                <br>
-                <br>
+                    <br>
+                    <br>
 
-                <label for="lname"><h5>Last Name</h5></label> <br>
-                <input type="text" placeholder="Enter Last Name" name="lname" required>
-
-                <br>
-                <br>
-
-
-                <label for="uname"><h5>Username</h5></label> <br>
-                <input type="text" placeholder="Enter Username" name="uname" required>
+                    <label for="userName"><h5>Username</h5></label> <br>
+                    <input type="text" placeholder="Enter Username" name="userName" required>
  
-                <br>
-                <br>
+                    <br>
+                    <br>
     
-                <label for="psw"><h5>Password</h5></label> <br>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+                    <label for="password"><h5>Password</h5></label> <br>
+                    <input type="password" placeholder="Enter Password" name="password" required>
  
-                <br>
-                <br>
+                    <br>
+                    <br>
 
-                <label for="rpsw"><h5>Confirm Password</h5></label> <br>
-                <input type="password" placeholder="Confirm Password" name="rpsw" required>
+                    <!-- <label for="rpsw"><h5>Confirm Password</h5></label> <br>
+                    <input type="password" placeholder="Confirm Password" name="rpsw" required> -->
 
-                <br>
-                <br>
-            </div>
-        </form>
+                    <br>
+                    <br>
+                </div>
+        </div>
     </div>
-  </div>
-    <div class="card col-sm-4">
-      <div class="container">
-        <form>
-          <h2>Sign Up</h2>
-          <div class="container">
-                <label for="email"><h5>Email</h5></label> <br>
-                <input type="email" placeholder="Enter Email" name="email" required>
 
-                <br>
-                <br>
 
-                <label for="add"><h5>Address</h5></label> <br>
-                <input type="address" placeholder="Enter Address" name="add" required>
+    <div class="card col-sm-5">
+        <div class="container">
+                <h2>Sign Up</h2>
 
-                <br>
-                <br>
+                <div class="container">
+                    <label for="email"><h5>Email</h5></label> <br>
+                    <input type="email" placeholder="Enter Email" name="email" required>
 
-                <label for="cnum">Card Number:</label><br>
-                <input type="numeric" id="cnum" name="cnum" placeholder="xxxx-xxxx-xxxx-xxxx" required>
+                    <br>
+                    <br>
 
-                <br>
-                <br>
+                    <label for="address"><h5>Address</h5></label> <br>
+                    <input type="address" placeholder="Enter Address" name="address" required>
 
-                <label for="cname">Card Name:</label><br>
-                <input type="text" id="cname" name="cname" placeholder="Name on Card" required>
+                    <br>   
+                    <br>
 
-                <br>
-                <br>
-
-                <label for="cvv">CVV:</label><br>
-                <input type="password" id="cvv" name="cvv" placeholder="xxx" required>
-                
-                <br>
-                <br>
-
-                <label for="exp-date">Expiration Date:</label><br>
-                <input type="month" id="exp-date" name="exp-date" required>
-
-                <br>
-                <br>
-
-                <label for="lname">Zipcode</label><br>
-                <input type="numeric" id="zip" name="zip" placeholder="xxxxx">
-
-                <br>
-                <br>
-
-                <h5>Membership Option</h5>
-                <input type="radio" id="month1" name="membership" value="1 Month">
-                <label for="month1">1 Month</label><br>
-                <input type="radio" id="month3" name="membership" value="3 Months">
-                <label for="month3">3 Months</label><br>
-                <input type="radio" id="month6" name="membership" value="6 Months">
-                <label for="month6">6 Months</label><br>
-                <input type="radio" id="year1" name="membership" value="1 Year">
-                <label for="year1">1 Year</label><br>
-    
-                <button type="submit" class="btn btn-outline-primary">Sign Up</button>
-          
-            </div>
-        </form>
+                    <h5>Membership Option</h5>
+                    <input type="radio" id="month1" name="membership" value="1 Month">
+                    <label for="membership">1 Month</label><br>
+                    <input type="radio" id="month3" name="membership" value="3 Months">
+                    <label for="membership">3 Months</label><br>
+                    <input type="radio" id="month6" name="membership" value="6 Months">
+                    <label for="membership">6 Months</label><br>
+                    <input type="radio" id="year1" name="membership" value="1 Year">
+                    <label for="membership">1 Year</label><br>
+                </div>
+            
+        </div>
     </div>
 </div>
+<br>
+
+<button type="submit" class="btn btn-outline-primary">Sign Up</button>
+</form>
+<br>
+<br>
+<h3>Please give payment information to employee on your first visit.</h3>
 <%- include('partials/html-end.ejs') %>

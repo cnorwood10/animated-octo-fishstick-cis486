@@ -3,39 +3,37 @@
     <div class="row">
         <div class="card col-sm-4">
             <div class="container">
-                <form>
-                    <h2>Login</h2>
                     <div class="container">
-                        <form method="post">
-                        <label for="uname"><h5>Username</h5></label> <br>
-                        <input type="text" placeholder="Enter Username" name="uname">
+                        <form method="post" action="/loginCheck">
+                            <br>
+                        <label for="userName"><h5>Username</h5></label> <br>
+                        <input type="text" placeholder="Enter Username" name="userName" required>
          
                         <br>
                         <br>
             
-                        <label for="psw"><h5>Password</h5></label> <br>
-                        <input type="password" placeholder="Enter Password" name="psw">
+                        <label for="password"><h5>Password</h5></label> <br>
+                        <input type="password" placeholder="Enter Password" name="password" required>
          
                         <br>
                         <br>
-                        </form>
-                        <a href="/account">
-                            <button type="submit" class="btn btn-outline-primary">Login</button>
-                        </a>
-                        <a href="/members">
+                        
+                        
+                        <button type="submit" class="btn btn-outline-primary" formaction="/loginCheck">Login</button> 
+                        
+                        <!-- <a href="/members">
                         <button type="sumbit" class="btn btn-outline-info" >Employees</button>
-                        </a>
+                        </a> -->
+                        </form>
                     </div>
-                </form>
+                    <br>
+                    <br>
+                <p>Not a Member?
+                    <a href="/signup">Sign Up</a>
+                </p>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="card col-sm-4">
-            <div class="container">
-                    <h2>Sign Up</h2>
-                    <a href="/signup"><button type="submit" class="btn btn-outline-primary">Sign Up Now!</button></a>
-            </div>
-        </div>
-    </div>
+
+
     <%- include('partials/html-end.ejs') %>
