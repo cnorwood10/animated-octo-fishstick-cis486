@@ -71,7 +71,7 @@ async function connectSchedule() {
 
 // Read from Database
 app.get('/', async (req, res) => {
-
+    
     let result = await connectMemberships();
 
     console.log("result: ", result);
@@ -86,11 +86,14 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/login', function (req, res) {
-
-    res.render('login', {
-        pageTitle: "Login",
-        title: "Login to your account"
-    })
+    if (!req.session.user) {
+        res.render('login', {
+            pageTitle: "Login",
+            title: "Login to your account"
+        })
+    } else {
+        res.redirect('/account');
+    }
 });
 
 
@@ -152,10 +155,10 @@ app.post('/signupNew', async (req, res) => {
                 //draws from body parser 
                 console.log(req.body);
         
-                await collection.insertOne(req.body);
-        
-        
-                res.redirect('/signup');
+                let user = await collection.insertOne(req.body);
+                req.session.user = user;
+                console.log("user: ", user);
+                res.redirect('/');
             }
             catch (err) {
                 console.log("error")
@@ -191,8 +194,9 @@ app.get('/schedule', async (req, res) => {
 
 app.get('/account', async (req, res) => {
     let result = await connectMemberships();
-
-    //console.log("result: ", result);
+    if (!req.session.user) { 
+        return res.redirect("/login"); 
+      };
     console.log("req.session.user: ", req.session.user);
 
     res.render('account', {
