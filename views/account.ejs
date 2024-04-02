@@ -2,9 +2,10 @@
 <form method="post" action="/updateMember" >
     <div class="row">
       <div class="col-sm-4">
-        <div id="acount" class="card bg-dark m-3" style="color:white;">
+        <div id="account" class="card bg-dark m-3" style="color:white;">
           <h4 class="card-title" style="text-align: center;">Name and Password</h4>
             <div class="card-body">
+              <input type="hidden" id="id" name="id" value="<%= name._id %>"></input>
               <label for="name">Name: </label>
               <input type="text" id="name" name="name" placeholder="<%= name.name %>"><br><br>
               <label for="userName">Username: </label>
@@ -15,7 +16,7 @@
         </div>
       </div>
       <div class="col-sm-4">
-        <div id="acount" class="card bg-dark m-3" style="color:white;">
+        <div id="account" class="card bg-dark m-3" style="color:white;">
           <h4 class="card-title" style="text-align: center;">Personal Information</h4>
             <div class="card-body">
               <label for="email">Email: </label>
@@ -28,7 +29,7 @@
     </div>
     <div class="row">
       <div class="col-sm-4">
-        <div id="acount" class="card bg-dark m-4" style="color:white;">
+        <div id="account" class="card bg-dark m-4" style="color:white;">
           <h4 class="card-title" style="text-align: center;">Membership Option</h4>
             <div class="card-body">
               <input type="radio" id="membership" name="membership" value="1 Month">

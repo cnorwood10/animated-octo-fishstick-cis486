@@ -201,7 +201,7 @@ app.get('/account', async (req, res) => {
         members: result,
         name: req.session.user,
     })
-} );
+});
 
 app.post('/updateMember', async (req, res) => {
     try{
@@ -211,50 +211,21 @@ app.post('/updateMember', async (req, res) => {
         let result = await collection.findOneAndUpdate(
             {_id: new ObjectId(req.body.id)},
             {$set: {name: req.body.name, 
-                    //userName: req.body.userName, 
-                    //password: req.body.password, 
-                    //email: req.body.email, 
-                    //address: req.body.address, 
-                    // membership: req.body.membership,
-                    // type: req.body.type,
-                }}
-        )
+                     password: req.body.password, 
+                     email: req.body.email, 
+                     address: req.body.address, 
+                     membership: req.body.membership,
+                     type: req.body.type,
+                }})
         .then(result => {
             console.log(result);
-            res.redirect('/account');
+            res.redirect("/account")
         })
         .catch(error => console.error(error))
     } catch {
         console.log("error");
     }
-
-    });
-
-// // Update to Database
-// app.post('/updateMember', async (req, res) => {
-
-//     try {
-
-//         console.log("body: ", req.body);
-
-//         client.connect;
-//         const collection = client.db("ClarksGym").collection("memberships");
-//         let result = await collection.findOneAndUpdate(
-//             { _id: new ObjectId(req.body.id) },
-//             { $set: { name: req.body.name, vehicleMileage: req.body.vehicleMileage } }
-//         )
-
-//             .then(result => {
-//                 console.log(result);
-//                 res.redirect('/');
-//             })
-//             .catch(error => console.error(error))
-//     }
-//     finally {
-//         //client.close()
-//     }
-
-// });
+    })
 
 //  Delete from Database
 app.post('/deleteMember', async (req, res) => {
@@ -271,8 +242,8 @@ app.post('/deleteMember', async (req, res) => {
         )
             .then(result => {
                 console.log(result);
-                res.redirect('/account');
-                
+                req.session.destroy();
+                res.redirect('/');
             })
             .catch(error => console.error(error))
     }
