@@ -14,14 +14,12 @@
       </div>
       <div class="card col-sm-5">
          <div class="container-fluid" id="index">
-           <h5 class="index">Reviews</h5>
-           <h8>John Doe</h8>
-           <p>The gym is always clean and everything is put away that is not in use.</p>
-           <p>I would recommend this gym to everyone</p><br>
-           <h8>Jane Doe</h8>
-           <p>The gym is never too crowded so I can get my workout done quick</p><br>
-           <h8>Customer</h8>
-           <p>The classes are easy to sign up for and are very fun to take.</p>
+            <h5 class="index">Reviews</h5>
+          <% for (var i=0; i< reviews.length; i++) { %>
+            <hr>
+                <h5><%= reviews[i].name %></h5>
+                <p><%= reviews[i].review %></p>
+           <% } %>
          </div>
       </div>
     </div>

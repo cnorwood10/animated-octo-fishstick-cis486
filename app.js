@@ -89,13 +89,15 @@ async function connectReview() {
 app.get('/', async (req, res) => {
     
     let result = await connectMemberships();
+    let review = await connectReview();
 
     //console.log("result: ", result);
 
     res.render('index', {
         pageTitle: "Clark's Gym",
         title: "Welcome to Clark's Gym",
-        members: result
+        members: result,
+        reviews: review
 
     });
 
@@ -105,7 +107,7 @@ app.get('/login', function (req, res) {
     if (!req.session.user) {
         res.render('login', {
             pageTitle: "Login",
-            title: "Login to your account"
+            title: "Login"
         })
     } else {
         res.redirect('/account');
@@ -139,23 +141,23 @@ app.post('/loginCheck', async (req, res) => {
     }
 });
 
-app.post('/members', async (req, res) => {
-    let result = await connectMemberships();
+// app.post('/members', async (req, res) => {
+//     let result = await connectMemberships();
 
-    console.log("result: ", result);
+//     console.log("result: ", result);
 
-    res.render('members', {
-        pageTitle: "Members",
-        title: "Memberships",
-        members: result
-    })
-});
+//     res.render('members', {
+//         pageTitle: "Members",
+//         title: "Memberships",
+//         members: result
+//     })
+// });
 
 app.get('/signup', async (req, res) => {
     
     res.render('signup', {
         pageTitle: "Sign Up",
-        title: "Sign Up for a Membership",
+        title: "Sign Up ",
     })
 });
 
@@ -199,7 +201,7 @@ app.get('/reviews', async (req, res) => {
 
     res.render('reviews', {
         pageTitle: "Reviews",
-        title: "View the Reviews",
+        title: "Reviews Page",
         reviews: result
     })
 });
@@ -227,7 +229,7 @@ app.get('/schedule', async (req, res) => {
 
     res.render('schedule', {
         pageTitle: "Schedule",
-        title: "View the Weekly Schedule",
+        title: "Weekly Schedule",
         schedule: resultSchedule
     })
 });
@@ -241,7 +243,7 @@ app.get('/account', async (req, res) => {
 
     res.render('account', {
         pageTitle: "Account",
-        title: "Your Account",
+        title: "Account Management",
         members: result,
         name: req.session.user,
     })
