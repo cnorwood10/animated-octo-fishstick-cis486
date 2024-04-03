@@ -12,6 +12,9 @@
     font-size: 15px;
 }
 
+nav{
+    font-size: 20px;
+}
 .styled-table {
     border-collapse: collapse;
     margin: 25px 0;
@@ -44,11 +47,34 @@
     border-bottom: 2px solid #da0303;
 }
 
-.account {
+#accmgt{
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+    font-size: 25px;
+    color: white;
+}
+
+#view{
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-size: 25px;
+    color: white;
+}
+
+#clark{
+    text-align: center;
+}
+
+#reviewForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    background-color: rgb(85, 85, 85);
     color: white;
 }

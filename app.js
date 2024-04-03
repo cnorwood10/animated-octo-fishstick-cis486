@@ -7,6 +7,8 @@ const port = (process.env.PORT || 5500)
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+var salt = bcrypt.genSaltSync(10);
+var hash = bcrypt.hashSync('bacon', 8);
 
 
 // set the view engine to ejs
@@ -23,7 +25,7 @@ app.use(session({
     cookie: {maxAge: 60000} // expires after 1 minute
 }));
 
-// use res.render to load
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.URI, {
     serverApi: {
@@ -38,7 +40,23 @@ async function connectMemberships() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         const result = await client.db("ClarksGym").collection("memberships").find().toArray();
-        console.log("mongo call await inside f/n: ", result);
+        //console.log("mongo call await inside f/n: ", result);
+        return result;
+    }
+    catch (err) {
+        console.log("getClarksGym() error: ", err);
+    }
+    finally {
+        
+    }
+}
+
+async function connectSchedule() {
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        const result = await client.db("ClarksGym").collection("schedule").find().toArray();
+        //console.log("mongo call await inside f/n: ", result);
         return result;
     }
     catch (err) {
@@ -50,14 +68,12 @@ async function connectMemberships() {
     }
 }
 
-async function connectSchedule() {
+async function connectReview() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
-        // Send a ping to confirm a successful connection
-        // await client.db("admin").command({ ping: 1 });
-        const result = await client.db("ClarksGym").collection("schedule").find().toArray();
-        console.log("mongo call await inside f/n: ", result);
+        const result = await client.db("ClarksGym").collection("reviews").find().toArray();
+        //console.log("mongo call await inside f/n: ", result);
         return result;
     }
     catch (err) {
@@ -71,10 +87,10 @@ async function connectSchedule() {
 
 // Read from Database
 app.get('/', async (req, res) => {
-
+    
     let result = await connectMemberships();
 
-    console.log("result: ", result);
+    //console.log("result: ", result);
 
     res.render('index', {
         pageTitle: "Clark's Gym",
@@ -86,24 +102,28 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/login', function (req, res) {
-
-    res.render('login', {
-        pageTitle: "Login",
-        title: "Login to your account"
-    })
+    if (!req.session.user) {
+        res.render('login', {
+            pageTitle: "Login",
+            title: "Login to your account"
+        })
+    } else {
+        res.redirect('/account');
+    }
 });
 
 
 
 app.post('/loginCheck', async (req, res) => {
     try {
+
         // check if the user exists
         client.connect;
         const collection = await client.db("ClarksGym").collection("memberships"); 
         let user = await collection.findOne({ userName: req.body.userName });
-        if (user) {
+
+        if (user || (await bcrypt.compare(req.body.password, user.password))) {
             // check if the password is correct
-            if (req.body.password === user.password) {
                 // store the user in the session
                 req.session.user = user;
                 res.redirect('/account');
@@ -144,19 +164,29 @@ app.get('/signup', async (req, res) => {
 });
 
 app.post('/signupNew', async (req, res) => {
-
+        
     try {
-                // console.log("req.body: ", req.body) 
+            if(req.body.password != req.body.password2){ 
+                throw new Error("Passwords do not match");
+            }
+                //Remove password2 from the request body to prevent it from being added to the database
+                delete req.body.password2; 
+
                 client.connect;
                 const collection = client.db("ClarksGym").collection("memberships");
         
                 //draws from body parser 
                 console.log(req.body);
-        
-                await collection.insertOne(req.body);
-        
-        
-                res.redirect('/signup');
+
+                //hash the password before adding to database
+                const salt = await bcrypt.genSalt();
+                const hashed_password = await bcrypt.hash(req.body.password,salt);
+                req.body.password = hashed_password;
+
+                let user = await collection.insertOne(req.body);
+                req.session.user = user;
+                console.log("user: ", user);
+                res.redirect('/');
             }
             catch (err) {
                 console.log("error")
@@ -167,15 +197,31 @@ app.post('/signupNew', async (req, res) => {
 } );
 
 app.get('/reviews', async (req, res) => {
-    let result = await connectMemberships();
+    let result = await connectReview();
 
     console.log("result: ", result);
 
     res.render('reviews', {
         pageTitle: "Reviews",
         title: "View the Reviews",
-        members: result
+        reviews: result
     })
+});
+
+app.post('/addReview', async (req, res) => {
+    try{
+        client.connect;
+        const collection = client.db("ClarksGym").collection("reviews");
+
+        console.log("body: ", req.body);
+        let review = await collection.insertOne(req.body);
+        console.log("review: ", review);
+        res.redirect("/reviews");
+    } catch {
+        console.log("Error Adding Review!");
+    } finally {
+        //client.close();
+    }
 });
 
 app.get('/schedule', async (req, res) => {
@@ -192,8 +238,9 @@ app.get('/schedule', async (req, res) => {
 
 app.get('/account', async (req, res) => {
     let result = await connectMemberships();
-
-    //console.log("result: ", result);
+    if (!req.session.user) { 
+        return res.redirect("/login"); 
+      }
     console.log("req.session.user: ", req.session.user);
 
     res.render('account', {
@@ -206,13 +253,24 @@ app.get('/account', async (req, res) => {
 
 app.post('/updateMember', async (req, res) => {
     try{
+        if(req.body.password != req.body.password2){ 
+            throw new Error("Passwords do not match");
+        }
+
+            //Remove password2 from the request body to prevent it from being added to the database
+            delete req.body.password2;
+
+            const salt = await bcrypt.genSalt();
+                const hashed_password = await bcrypt.hash(req.body.password,salt);
+                req.body.password = hashed_password;
+
         console.log("body: ", req.body);
         client.connect;
         const collection = client.db("ClarksGym").collection("memberships");
         let result = await collection.findOneAndUpdate(
             {_id: new ObjectId(req.body.id)},
             {$set: {name: req.body.name, 
-                     password: req.body.password, 
+                     password: hashed_password, 
                      email: req.body.email, 
                      address: req.body.address, 
                      membership: req.body.membership,
