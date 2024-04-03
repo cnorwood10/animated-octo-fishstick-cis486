@@ -40,7 +40,7 @@ async function connectMemberships() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         const result = await client.db("ClarksGym").collection("memberships").find().toArray();
-        console.log("mongo call await inside f/n: ", result);
+        //console.log("mongo call await inside f/n: ", result);
         return result;
     }
     catch (err) {
@@ -56,7 +56,24 @@ async function connectSchedule() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         const result = await client.db("ClarksGym").collection("schedule").find().toArray();
-        console.log("mongo call await inside f/n: ", result);
+        //console.log("mongo call await inside f/n: ", result);
+        return result;
+    }
+    catch (err) {
+        console.log("getClarksGym() error: ", err);
+    }
+    finally {
+        // Ensures that the client will close when you finish/error
+        //await client.close();
+    }
+}
+
+async function connectReview() {
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        const result = await client.db("ClarksGym").collection("reviews").find().toArray();
+        //console.log("mongo call await inside f/n: ", result);
         return result;
     }
     catch (err) {
@@ -73,7 +90,7 @@ app.get('/', async (req, res) => {
     
     let result = await connectMemberships();
 
-    console.log("result: ", result);
+    //console.log("result: ", result);
 
     res.render('index', {
         pageTitle: "Clark's Gym",
@@ -174,15 +191,31 @@ app.post('/signupNew', async (req, res) => {
 } );
 
 app.get('/reviews', async (req, res) => {
-    let result = await connectMemberships();
+    let result = await connectReview();
 
     console.log("result: ", result);
 
     res.render('reviews', {
         pageTitle: "Reviews",
         title: "View the Reviews",
-        members: result
+        reviews: result
     })
+});
+
+app.post('/addReview', async (req, res) => {
+    try{
+        client.connect;
+        const collection = client.db("ClarksGym").collection("reviews");
+
+        console.log("body: ", req.body);
+        let review = await collection.insertOne(req.body);
+        console.log("review: ", review);
+        res.redirect("/reviews");
+    } catch {
+        console.log("Error Adding Review!");
+    } finally {
+        //client.close();
+    }
 });
 
 app.get('/schedule', async (req, res) => {
@@ -221,13 +254,17 @@ app.post('/updateMember', async (req, res) => {
             //Remove password2 from the request body to prevent it from being added to the database
             delete req.body.password2;
 
+            const salt = await bcrypt.genSalt();
+                const hashed_password = await bcrypt.hash(req.body.password,salt);
+                req.body.password = hashed_password;
+
         console.log("body: ", req.body);
         client.connect;
         const collection = client.db("ClarksGym").collection("memberships");
         let result = await collection.findOneAndUpdate(
             {_id: new ObjectId(req.body.id)},
             {$set: {name: req.body.name, 
-                     password: req.body.password, 
+                     password: hashed_password, 
                      email: req.body.email, 
                      address: req.body.address, 
                      membership: req.body.membership,
