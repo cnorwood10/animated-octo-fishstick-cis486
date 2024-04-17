@@ -10,7 +10,6 @@ const bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
 var hash = bcrypt.hashSync('bacon', 8);
 
-
 // set the view engine to ejs
 let path = require('path');
 
@@ -104,7 +103,8 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/login', function (req, res) {
-    if (!req.session.user) {
+    const { user } = req.session;
+    if (!user) {
         res.render('login', {
             pageTitle: "Login",
             title: "Login"
@@ -139,6 +139,11 @@ app.post('/loginCheck', async (req, res) => {
      catch (error) {
         console.log(error);
     }
+});
+
+app.post('/logout', (req, res) => {
+    delete req.session.user;
+    res.redirect('/login');
 });
 
 // app.post('/members', async (req, res) => {
