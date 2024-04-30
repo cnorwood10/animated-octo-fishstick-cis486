@@ -6,10 +6,10 @@ Read more about our team in wiki 📖 : [Wiki](https://github.com/cnorwood10/ani
 
 <h3>⭐ Here is our user story:  </h3>
 
-**As A** customer wanting to get fit
+**As A** potential gym member
 
-**I want** a functioning interface, including an add member form
+**I want** to easily sign up for a membership online
 
-**So that** I can sign up for a membership and classes.
+**So that** so I can conveniently begin my fitness journey
 
 
